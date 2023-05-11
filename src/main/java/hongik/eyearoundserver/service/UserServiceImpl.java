@@ -3,6 +3,7 @@ package hongik.eyearoundserver.service;
 import hongik.eyearoundserver.config.security.JwtProvider;
 import hongik.eyearoundserver.domain.User;
 import hongik.eyearoundserver.dto.LoginRequestDTO;
+import hongik.eyearoundserver.dto.PasswordRequestDto;
 import hongik.eyearoundserver.dto.UserRequestDTO;
 import hongik.eyearoundserver.dto.UserResponseDTO;
 import hongik.eyearoundserver.exception.CustomException;
@@ -52,5 +53,15 @@ public class UserServiceImpl implements UserService {
         }
         String token = jwtProvider.createToken(requestDTO.getEmail());
         return new UserResponseDTO(user, token);
+    }
+
+    // TODO: 유저 본인인지 검증 필요 (기존 password 도 확인)
+    @Override
+    public void changePassword(PasswordRequestDto requestDto, User user) {
+        if (passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.PASSWORD_DUPLICATE);
+        }
+        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        userRepository.save(user);
     }
 }

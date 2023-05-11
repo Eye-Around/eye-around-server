@@ -1,6 +1,5 @@
 package hongik.eyearoundserver.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequestDTO {
-    @Email @NotBlank
-    private String email;
+public class PasswordRequestDto {
     @NotBlank
     private String password;
 }
