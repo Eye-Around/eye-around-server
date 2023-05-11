@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/exercises")
+@RequestMapping("/exercise")
 @Slf4j
 public class ExerciseController {
 
