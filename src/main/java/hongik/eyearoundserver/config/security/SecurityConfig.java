@@ -32,13 +32,10 @@ public class SecurityConfig {
                     CorsConfigurationSource source = request -> getCorsConfiguration();
                     c.configurationSource(source);
                 })
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 // 조건별로 요청 허용/제한 설정
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/users/signup", "api/users/login").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers("/users/signup", "/users/login").permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 // 인증 문제 발생 시, 이 부분 호출
