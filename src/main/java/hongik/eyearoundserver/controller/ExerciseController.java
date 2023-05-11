@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,5 +23,11 @@ public class ExerciseController {
     public ResponseEntity<ExerciseResponseDTO> createExercise(@RequestBody ExerciseRequestDto requestDto) {
         log.info("눈 운동 생성 - title = {}", requestDto.getTitle());
         return new ResponseEntity<>(exerciseService.createExercise(requestDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ExerciseResponseDTO>> getExerciseList() {
+        log.info("눈 운동 리스트 조회");
+        return new ResponseEntity<>(exerciseService.getExerciseList(), HttpStatus.OK);
     }
 }
