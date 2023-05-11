@@ -1,5 +1,6 @@
 package hongik.eyearoundserver.controller;
 
+import hongik.eyearoundserver.domain.User;
 import hongik.eyearoundserver.dto.ExerciseRequestDto;
 import hongik.eyearoundserver.dto.ExerciseResponseDTO;
 import hongik.eyearoundserver.service.ExerciseService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +38,12 @@ public class ExerciseController {
     public ResponseEntity<ExerciseResponseDTO> getExercise(@PathVariable Long exerciseId) {
         log.info("눈 운동 조회 - id = {}", exerciseId);
         return new ResponseEntity<>(exerciseService.getExercise(exerciseId), HttpStatus.OK);
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity changeTodayState(@AuthenticationPrincipal User user) {
+        log.info("오늘의 운동 완료 - user.name = {}", user.getName());
+        exerciseService.changeTodayState(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

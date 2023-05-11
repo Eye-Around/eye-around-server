@@ -1,11 +1,13 @@
 package hongik.eyearoundserver.service;
 
 import hongik.eyearoundserver.domain.Exercise;
+import hongik.eyearoundserver.domain.User;
 import hongik.eyearoundserver.dto.ExerciseRequestDto;
 import hongik.eyearoundserver.dto.ExerciseResponseDTO;
 import hongik.eyearoundserver.exception.CustomException;
 import hongik.eyearoundserver.exception.ErrorCode;
 import hongik.eyearoundserver.repository.ExerciseRepository;
+import hongik.eyearoundserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class ExerciseServiceImpl implements ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -43,5 +46,13 @@ public class ExerciseServiceImpl implements ExerciseService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXERCISE));
 
         return new ExerciseResponseDTO(exercise);
+    }
+
+    // TODO: scheduling
+    @Override
+    @Transactional
+    public void changeTodayState(User user) {
+        user.changeState();
+        userRepository.save(user);
     }
 }
