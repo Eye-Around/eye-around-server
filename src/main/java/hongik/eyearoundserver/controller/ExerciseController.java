@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +27,14 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExerciseResponseDTO>> getExerciseList() {
+    public List<ExerciseResponseDTO> getExerciseList() {
         log.info("눈 운동 리스트 조회");
-        return new ResponseEntity<>(exerciseService.getExerciseList(), HttpStatus.OK);
+        return exerciseService.getExerciseList();
+    }
+
+    @GetMapping("/{exerciseId}")
+    public ResponseEntity<ExerciseResponseDTO> getExercise(@PathVariable Long exerciseId) {
+        log.info("눈 운동 조회 - id = {}", exerciseId);
+        return new ResponseEntity<>(exerciseService.getExercise(exerciseId), HttpStatus.OK);
     }
 }
