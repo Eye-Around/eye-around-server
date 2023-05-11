@@ -7,5 +7,4 @@ public interface UserService {
     UserResponseDTO signUp(UserRequestDTO requestDTO);
     UserResponseDTO login(LoginRequestDTO requestDTO);
     void changePassword(PasswordRequestDto requestDto, User user);
-//    ProfileResponseDTO getProfile(User user);
 }

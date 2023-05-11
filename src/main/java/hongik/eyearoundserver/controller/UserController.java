@@ -1,10 +1,7 @@
 package hongik.eyearoundserver.controller;
 
 import hongik.eyearoundserver.domain.User;
-import hongik.eyearoundserver.dto.LoginRequestDTO;
-import hongik.eyearoundserver.dto.PasswordRequestDto;
-import hongik.eyearoundserver.dto.UserRequestDTO;
-import hongik.eyearoundserver.dto.UserResponseDTO;
+import hongik.eyearoundserver.dto.*;
 import hongik.eyearoundserver.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +38,11 @@ public class UserController {
         log.info("비밀번호 변경 - email = {}", user.getEmail());
         userService.changePassword(requestDto, user);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileResponseDTO> getProfile(@AuthenticationPrincipal User user) {
+        log.info("프로필 조회 (마이페이지) - name = {}", user.getName());
+        return new ResponseEntity<>(new ProfileResponseDTO(user), HttpStatus.OK);
     }
 }
