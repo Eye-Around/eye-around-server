@@ -54,7 +54,13 @@ public class UserServiceImpl implements UserService {
         return new UserResponseDTO(user, token);
     }
 
-    // TODO: 유저 본인인지 검증 필요 (기존 password 도 확인)
+    @Override
+    public void checkPassword(PasswordRequestDto requestDto, User user) {
+        if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.WRONG_PASSWORD);
+        }
+    }
+
     @Override
     public void changePassword(PasswordRequestDto requestDto, User user) {
         if (passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {

@@ -51,15 +51,29 @@ public class UserController {
         return new ResponseEntity<>(userService.login(requestDTO), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "비밀번호 확인 API", description = "비밀번호 변경 전 비밀번호를 받아 사용자 본인인지 검증합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다"),
+            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다"),
+    })
+    @PutMapping(value = "/password/check")
+    public ResponseEntity checkPassword(
+            @RequestBody @Valid PasswordRequestDto requestDto,
+            @AuthenticationPrincipal User user) {
+        log.info("비밀번호 검증 - email = {}", user.getEmail());
+        userService.checkPassword(requestDto, user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @Operation(summary = "비밀번호 변경 API", description = "변경할 비밀번호를 받아 변경을 완료합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "로그인 성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다"),
             @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다"),
-            @ApiResponse(responseCode = "404", description = "가입되어 있지 않은 사용자입니다. 회원가입을 시도해주세요."),
             @ApiResponse(responseCode = "409", description = "기존 비밀번호와 동일한 비밀번호입니다. 다시 시도해주세요.")
     })
-    @PutMapping(value = "/password")
+    @PutMapping(value = "/password/update")
     public ResponseEntity changePassword(
             @RequestBody @Valid PasswordRequestDto requestDto,
             @AuthenticationPrincipal User user) {

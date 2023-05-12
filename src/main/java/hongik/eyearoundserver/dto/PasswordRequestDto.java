@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PasswordRequestDto {
     @NotBlank
-    @Schema(description = "변경할 비밀번호", defaultValue = "anotherPassword")
+    @Schema(description = "입력한 비밀번호", defaultValue = "anotherPassword")
     private String password;
 }
