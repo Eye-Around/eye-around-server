@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 @Slf4j
 // JwtProvider 가 검증을 끝낸 jwt 로부터 유저 정보를 조회해 UserPasswordAuthenticationFilter 로 전달
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
