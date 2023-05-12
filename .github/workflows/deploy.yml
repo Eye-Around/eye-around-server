@@ -43,7 +43,7 @@ jobs:
         run: |
           cd ./src/main/resources
           touch ./application-prod.properties
-          echo "$PROPERTIES_PROD" > ./src/main/resources/application-prod.properties
+          echo "$PROPERTIES_PROD" > ./application-prod.properties
         env:
           PROPERTIES_PROD: ${{ secrets.PROPERTIES_PROD }}
 
