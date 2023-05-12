@@ -50,7 +50,7 @@ public class SecurityConfig {
 
     private CorsConfiguration getCorsConfiguration() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://13.209.247.63"));
+        config.setAllowedOrigins(List.of("*"));
         config.setAllowedMethods(List.of("*"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
