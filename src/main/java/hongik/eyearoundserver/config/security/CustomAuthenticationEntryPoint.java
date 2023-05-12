@@ -6,6 +6,7 @@ import hongik.eyearoundserver.exception.ErrorResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Component
+@Slf4j
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private static ErrorResponse errorResponse = ErrorResponse.toEntity(ErrorCode.UNAUTHORIZED_USER);

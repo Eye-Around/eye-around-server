@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,9 +34,11 @@ public class SecurityConfig {
                     c.configurationSource(source);
                 })
                 // 조건별로 요청 허용/제한 설정
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/user/signup", "/user/login").permitAll()
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests()
+                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/v3/**").permitAll()
+                .requestMatchers("/user/signup", "/user/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 // 인증 문제 발생 시, 이 부분 호출
