@@ -27,5 +27,5 @@ echo "start docker-compose up: ubuntu"
 sudo docker stop $(sudo docker ps -a -q)
 sudo docker rm $(sudo docker ps -a -q)
 sudo docker rmi $(sudo docker images -q)
-sudo docker-compose -f /home/srv/ubuntu/docker-compose.yml pull
-sudo docker-compose -f /home/srv/ubuntu/docker-compose.yml up --build -d
+sudo docker-compose -f /home/ubuntu/srv/server/docker-compose.yml pull
+sudo docker-compose -f /home/ubuntu/srv/server/docker-compose.yml up --build -d
