@@ -50,5 +50,5 @@ out/
 .DS_Store
 
 ### application properties ###
-src/main/resources/application-local.yml
+src/main/resources/application-local.properties
 src/main/resources/application-prod.properties
