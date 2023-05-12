@@ -29,11 +29,10 @@ public class User extends DateEntity implements UserDetails {
     @Column
     private String name;
 
-    @Column(columnDefinition = "tinyint(1) default 0")
+    @Column
     private Boolean state;
 
     @Column
-    @ColumnDefault("int default 0")
     private Integer weekCount;
 
     @Builder
