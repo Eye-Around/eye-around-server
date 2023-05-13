@@ -1,5 +1,7 @@
 package hongik.eyearoundserver.service;
 
+import hongik.eyearoundserver.dto.ExerciseRequestDto;
+import hongik.eyearoundserver.dto.ExerciseResponseDTO;
 import hongik.eyearoundserver.dto.GuideResponseDTO;
 
 import java.util.List;

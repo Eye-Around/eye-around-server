@@ -39,10 +39,6 @@ public class Exercise extends DateEntity {
     @Column
     private String message;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "guide_id")
-    private Guide guide;
-
     @Builder
     public Exercise(String title, List<String> tags, ExerciseType type, Direction direction, String message, Guide guide) {
         this.title = title;
@@ -50,6 +46,5 @@ public class Exercise extends DateEntity {
         this.type = type;
         this.direction = direction;
         this.message = message;
-        this.guide = guide;
     }
 }

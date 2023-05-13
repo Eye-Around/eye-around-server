@@ -1,6 +1,7 @@
 package hongik.eyearoundserver.dto;
 
 import hongik.eyearoundserver.domain.Exercise;
+import hongik.eyearoundserver.domain.ExerciseGuide;
 import hongik.eyearoundserver.domain.Guide;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -19,14 +20,14 @@ public class GuideResponseDTO {
     private String effect;
 
     @Builder
-    public GuideResponseDTO(Guide guide) {
+    public GuideResponseDTO(Guide guide, List<ExerciseGuide> exerciseGuides) {
         this.id = guide.getId();
         this.effect = guide.getEffect();
 
-        List<ExerciseResponseDTO> exercises = new ArrayList<>();
-        for (Exercise e : guide.getExercises()) {
-            exercises.add(new ExerciseResponseDTO(e));
+        List<ExerciseResponseDTO> responses = new ArrayList<>();
+        for (ExerciseGuide e : exerciseGuides) {
+            responses.add(new ExerciseResponseDTO(e.getExercise()));
         }
-        this.exercises = exercises;
+        this.exercises = responses;
     }
 }

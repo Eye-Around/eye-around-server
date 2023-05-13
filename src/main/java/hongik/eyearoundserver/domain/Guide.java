@@ -18,9 +18,6 @@ public class Guide extends DateEntity {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "guide", cascade = CascadeType.ALL)
-    private List<Exercise> exercises = new ArrayList<>();
-
     @Column
     private String effect;
 
