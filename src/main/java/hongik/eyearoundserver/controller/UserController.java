@@ -2,6 +2,7 @@ package hongik.eyearoundserver.controller;
 
 import hongik.eyearoundserver.domain.User;
 import hongik.eyearoundserver.dto.*;
+import hongik.eyearoundserver.exception.ErrorResponse;
 import hongik.eyearoundserver.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -30,8 +31,8 @@ public class UserController {
     @Operation(summary = "회원가입 API", description = "사용자에게 정보를 받아 회원가입을 완료합니다. 회원가입 성공 시, token 을 발급하여 따로 로그인이 필요하지 않습니다. 발급된 token 은 flutter 내에 저장하여 회원가입과 로그인을 제외한 모든 API 요청 시, header 의 'Authorization' 에 토큰을 담아 보내야 합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = UserResponseDTO.class))),
-            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다"),
-            @ApiResponse(responseCode = "409", description = "이미 가입되어 있는 사용자의 이메일 혹은 이름입니다")
+            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "409", description = "이미 가입되어 있는 사용자의 이메일 혹은 이름입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping(value = "/signup")
     public ResponseEntity<UserResponseDTO> signUp(@RequestBody @Valid UserRequestDTO requestDTO) {
@@ -42,8 +43,8 @@ public class UserController {
     @Operation(summary = "로그인 API", description = "이메일, 비밀번호를 받아 로그인을 완료합니다. 로그인 성공 시, 발급된 token 은 flutter 내에 저장하여 회원가입과 로그인을 제외한 모든 API 요청 시, header 의 'Authorization' 에 토큰을 담아 보내야 합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "로그인 성공", content = @Content(schema = @Schema(implementation = UserResponseDTO.class))),
-            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청이거나 혹은 비밀번호가 일치하지 않습니다"),
-            @ApiResponse(responseCode = "404", description = "가입되어 있지 않은 사용자입니다. 회원가입을 시도해주세요.")
+            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청이거나 혹은 비밀번호가 일치하지 않습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "가입되어 있지 않은 사용자입니다. 회원가입을 시도해주세요.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping(value = "/login")
     public ResponseEntity<UserResponseDTO> login(@RequestBody @Valid LoginRequestDTO requestDTO) {
@@ -53,9 +54,9 @@ public class UserController {
 
     @Operation(summary = "비밀번호 확인 API", description = "비밀번호 변경 전 비밀번호를 받아 사용자 본인인지 검증합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다"),
-            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다"),
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(hidden = true))),
+            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/password/check")
     public ResponseEntity checkPassword(
@@ -68,9 +69,9 @@ public class UserController {
 
     @Operation(summary = "비밀번호 변경 API", description = "변경할 비밀번호를 받아 변경을 완료합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "로그인 성공"),
-            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다"),
-            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다"),
+            @ApiResponse(responseCode = "201", description = "업데이트 성공", content = @Content(schema = @Schema(hidden = true))),
+            @ApiResponse(responseCode = "400", description = "잘못된 형식의 요청입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "409", description = "기존 비밀번호와 동일한 비밀번호입니다. 다시 시도해주세요.")
     })
     @PutMapping(value = "/password/update")
@@ -85,7 +86,7 @@ public class UserController {
     @Operation(summary = "프로필(마이페이지) 조회 API", description = "마이페이지 및 홈화면에서 필요한 유저의 프로필 정보와 눈 운동 통계값을 반환합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ProfileResponseDTO.class))),
-            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다")
+            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/profile")
     public ResponseEntity<ProfileResponseDTO> getProfile(@AuthenticationPrincipal User user) {

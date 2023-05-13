@@ -2,6 +2,8 @@ package hongik.eyearoundserver.controller;
 
 import hongik.eyearoundserver.dto.ExerciseResponseDTO;
 import hongik.eyearoundserver.dto.GuideResponseDTO;
+import hongik.eyearoundserver.exception.ErrorCode;
+import hongik.eyearoundserver.exception.ErrorResponse;
 import hongik.eyearoundserver.service.GuideService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -33,7 +35,7 @@ public class GuideController {
     @Operation(summary = "눈 운동 가이드 리스트 조회 API", description = "눈 운동 가이드 리스트 전체를 반환합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GuideResponseDTO.class)))),
-            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다")
+            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
     public List<GuideResponseDTO> getGuideList() {
@@ -44,8 +46,8 @@ public class GuideController {
     @Operation(summary = "눈 운동 가이드 상세 조회 API", description = "사용자가 눈 운동 가이드 리스트 중 하나를 클릭할 시, 해당 눈 운동 가이드 정보를 반환합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = GuideResponseDTO.class))),
-            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다"),
-            @ApiResponse(responseCode = "404", description = "요청하신 가이드를 찾을 수 없습니다")
+            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "요청하신 가이드를 찾을 수 없습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 
     })
     @GetMapping("/{guideId}")
