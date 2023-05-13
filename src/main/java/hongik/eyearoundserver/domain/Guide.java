@@ -19,10 +19,14 @@ public class Guide extends DateEntity {
     private Long id;
 
     @Column
+    private String title;
+
+    @Column
     private String effect;
 
     @Builder
-    public Guide(String effect) {
+    public Guide(String title, String effect) {
+        this.title = title;
         this.effect = effect;
     }
 }
